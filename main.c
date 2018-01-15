@@ -2,16 +2,16 @@
 #include <string.h>
 #include <ctype.h>
 
-void place(int[][16],int n);                                            /*�֐��̃v���g�^�C�v�錾*/
+void place(int[][16],int n);                                            /*関数のプロトタイプ宣言*/
 void disp(int[][16],int n);
 
 
 /********************************/
-/*���C���֐�
-/*   ��Ɣz��̏��������s��
+/*メイン関数
+/*   作業配列の初期化を行う
 /*
-/*�p�����[�^�F�Ȃ�
-/*���^�[��  �F0�FOK 
+/*パラメータ：なし
+/*リターン  ：0：OK 
 /*******************************/
 
 int main( void )
@@ -20,26 +20,26 @@ int main( void )
     char dmy[80];
     int i,j,n;
     while(1){
-        printf("3�ȏ�15�ȉ��̊����͂��Ă��������F");
-        if(scanf("%d",&n)!=1){                                        /*�j���[�����b�N�`�F�b�N*/
+        printf("3以上15以下の奇数を入力してください：");
+        if(scanf("%d",&n)!=1){                                        /*ニューメリックチェック*/
             gets(dmy);
-            printf("��������͂��Ă��������B\n");
+            printf("数字を入力してください。\n");
             continue;
         }
         if(n%2==0){
-            printf("�����͂��Ă��������B\n");
+            printf("奇数を入力してください。\n");
                 
         }else{
-            if(n<3){
-                printf("3�ȏ�15�ȉ��̊����͂��Ă��������B\n");
+            if(n<3　|| n>15){
+                printf("3以上15以下の奇数を入力してください。\n");
             }else{
                     break;
             }
         }
     }
-    for(j=0;j<=n+1;j++){                                                /*�s�̏�����*/
-        for(i=0;i<=n+1;i++){                                            /*��̏�����*/
-            if(i==0||i==n+1||j==0||j==n+1){                             /*��Ɨ̈悩�ǂ������m�p����*/
+    for(j=0;j<=n+1;j++){                                                /*行の初期化*/
+        for(i=0;i<=n+1;i++){                                            /*列の初期化*/
+            if(i==0||i==n+1||j==0||j==n+1){                             /*作業領域かどうか検知用数字*/
                 work[j][i]=n*n+1;
             }else{
                 work[j][i]=0;
@@ -56,34 +56,34 @@ int main( void )
 
 
 /************************************/
-/*�����̏ꏊ���߂Ɣz�u���s��
+/*数字の場所決めと配置を行う
 /*
-/*�p�����[�^�Fint work[][16] [in/out]
+/*パラメータ：int work[][16] [in/out]
 /*            int n[in]
-/*���^�[��  �F�Ȃ�
+/*リターン  ：なし
 /***********************************/
 void place(int work[][16],int n)
 {
     int i,j,num;
     num=1;
     while(num<n*n+1){
-        if(num==1){                                                        /*i,j�̏����l*/
+        if(num==1){                                                        /*i,jの初期値*/
             i=n/2+1;
             j=n/2+2;
         }
         while(1){
-            if(i>n){                                                    /*�E�ɂ݂͂�������*/
+            if(i>n){                                                    /*右にはみだした時*/
                 i=1;
-            }else if(1>i){                                                /*���ɂ݂͂�������*/
+            }else if(1>i){                                                /*左にはみだした時*/
                 i=n;
             }
-            if(j>n){                                                    /*���ɂ݂͂�������*/
+            if(j>n){                                                    /*下にはみだした時*/
                 j=1;
             }
 
-            if(work[j][i]==0){                                            /*�����������Ă��Ȃ�*/
+            if(work[j][i]==0){                                            /*数字が入っていない場合*/
                 break;
-            }else{                                                        /*���łɓ����Ă���*/
+            }else{                                                        /*すでに入っている場合*/
                 i--;
                 j++;
             }
@@ -99,11 +99,11 @@ void place(int work[][16],int n)
 }
 
 /************************************/
-/*���@�w�̕\��
+/*魔法陣の表示
 /*
-/*�p�����[�^�Fint work[][16][in]
+/*パラメータ：int work[][16][in]
 /*            int n[in]
-/*���^�[��  �F�Ȃ�
+/*リターン  ：なし
 /***********************************/
 
 void disp(int work[][16],int n)
